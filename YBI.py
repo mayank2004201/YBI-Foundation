@@ -1,6 +1,5 @@
 # Importing necessary libraries
 import numpy as np
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
@@ -22,21 +21,13 @@ model.fit(np.concatenate((weights_train, engine_train), axis=1), mileage_train)
 # Making predictions
 mileage_pred = model.predict(np.concatenate((weights_test, engine_test), axis=1))
 
-# Plotting the results
-plt.figure(figsize=(10, 6))
-
-plt.scatter(weights_test, mileage_test, color='blue', label='Actual Mileage')
-plt.scatter(engine_test, mileage_test, color='green', label='Actual Mileage')
-plt.scatter(weights_test, mileage_pred, color='red', label='Predicted Mileage')
-
-plt.title('Mileage Prediction')
-plt.xlabel('Vehicle Weight (kg) and Engine Size (liters)')
-plt.ylabel('Miles per gallon (MPG)')
-plt.legend()
-plt.show()
+# Printing the results
+print("Actual Mileage vs Predicted Mileage:")
+for actual, predicted in zip(mileage_test, mileage_pred):
+    print(f"Actual: {actual} MPG, Predicted: {predicted:.2f} MPG")
 
 # Example prediction
 example_weight = np.array([[2000]])  # kg
 example_engine_size = np.array([[2.0]])  # liters
 predicted_mileage = model.predict(np.concatenate((example_weight, example_engine_size), axis=1))
-print(f"Predicted mileage for a vehicle weighing {example_weight[0][0]} kg with an engine size of {example_engine_size[0][0]} liters: {predicted_mileage[0]} MPG")
+print(f"\nPredicted mileage for a vehicle weighing {example_weight[0][0]} kg with an engine size of {example_engine_size[0][0]} liters: {predicted_mileage[0]:.2f} MPG")
